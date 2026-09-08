@@ -20,7 +20,6 @@
     body { background: var(--bg); color: var(--text); padding-bottom: 3rem; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* Header Banner */
     .header-banner {
       width: 100%; height: 220px; background-size: cover; background-position: center;
       position: relative; background-color: #6366f1; margin-bottom: 2rem;
@@ -55,7 +54,6 @@
     }
     body.teacher-mode .banner-edit-btn { display: block; }
 
-    /* Home View Grid */
     .grid-container {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;
     }
@@ -85,7 +83,6 @@
       border-radius: 6px; font-size: 0.75rem; cursor: pointer;
     }
 
-    /* Controls Panel */
     .teacher-panel {
       background: var(--card); padding: 1.25rem; border-radius: 12px;
       border: 1px solid var(--border); margin-bottom: 1.5rem; display: none;
@@ -105,7 +102,6 @@
       position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
     }
 
-    /* Table View */
     .table-wrapper { overflow-x: auto; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; min-width: 800px; }
     th, td { padding: 0.75rem; border-bottom: 1px solid var(--border); text-align: center; vertical-align: middle; }
@@ -117,57 +113,19 @@
     .avatar { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); object-fit: cover; }
     body.teacher-mode .avatar { cursor: pointer; border: 2px dashed var(--primary); }
 
-    .act-header-wrapper {
-      display: block;
-      color: inherit;
-      text-decoration: none;
-      padding: 0.25rem;
-      border-radius: 8px;
-      transition: background 0.15s;
-    }
-    .act-header-wrapper.has-link {
-      cursor: pointer;
-    }
-    .act-header-wrapper.has-link:hover {
-      background: #e2e8f0;
-    }
-    .act-title-text {
-      font-size: 0.75rem;
-      color: var(--text);
-      font-weight: bold;
-      text-transform: none;
-      margin-top: 2px;
-    }
-    .act-header-wrapper.has-link .act-title-text {
-      color: var(--primary);
-    }
+    .act-header-wrapper { display: block; color: inherit; text-decoration: none; padding: 0.25rem; border-radius: 8px; transition: background 0.15s; }
+    .act-header-wrapper.has-link { cursor: pointer; }
+    .act-header-wrapper.has-link:hover { background: #e2e8f0; }
+    .act-title-text { font-size: 0.75rem; color: var(--text); font-weight: bold; text-transform: none; margin-top: 2px; }
+    .act-header-wrapper.has-link .act-title-text { color: var(--primary); }
 
-    /* Vivid Tokens in Student View */
-    .token-btn { 
-      background: none; 
-      border: none; 
-      font-size: 1.6rem; 
-      cursor: pointer; 
-      transition: transform 0.15s; 
-    }
+    .token-btn { background: none; border: none; font-size: 1.6rem; cursor: pointer; transition: transform 0.15s; }
     .token-btn:hover { transform: scale(1.2); }
-    
-    /* Grayscale/Opacity dimming ONLY applies when in Teacher Mode */
-    body.teacher-mode .token-btn.empty { 
-      opacity: 0.25; 
-      filter: grayscale(100%); 
-    }
-    /* In Student View, unearned tokens remain fully vivid and colored */
-    body:not(.teacher-mode) .token-btn { 
-      opacity: 1 !important; 
-      filter: none !important; 
-    }
+    body.teacher-mode .token-btn.empty { opacity: 0.25; filter: grayscale(100%); }
+    body:not(.teacher-mode) .token-btn { opacity: 1 !important; filter: none !important; }
 
-    .icon-btn-sm {
-      background: none; border: none; cursor: pointer; font-size: 0.8rem; opacity: 0.7; margin: 0 2px;
-    }
+    .icon-btn-sm { background: none; border: none; cursor: pointer; font-size: 0.8rem; opacity: 0.7; margin: 0 2px; }
     .icon-btn-sm:hover { opacity: 1; }
-
     .nav-breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
   </style>
 </head>
@@ -196,17 +154,14 @@
   </div>
 
   <div class="container">
-    <!-- Breadcrumb Nav -->
     <div class="nav-breadcrumb" id="breadcrumb" style="display: none;">
       <button class="btn btn-secondary" onclick="showHome()">← Back to Sections</button>
       <h2 id="active-section-title" style="font-size: 1.3rem;"></h2>
     </div>
 
-    <!-- Teacher Panel -->
     <div class="teacher-panel">
       <h3 style="margin-bottom: 0.75rem;">✏️ Teacher Controls</h3>
       
-      <!-- Add Section Form -->
       <div class="form-grid" id="form-add-section" style="margin-bottom: 1rem;">
         <input type="text" id="new-section-name" placeholder="New Section Name" />
         <div class="file-input-wrapper">
@@ -216,7 +171,6 @@
         <button class="btn" onclick="addSection()">+ Add Section</button>
       </div>
 
-      <!-- Add Student & Task Form -->
       <div class="form-grid" id="form-section-controls" style="display: none;">
         <input type="text" id="new-student-name" placeholder="Student Name" />
         <div class="file-input-wrapper">
@@ -227,7 +181,7 @@
         
         <div style="grid-column: 1 / -1; height: 1px; background: var(--border); margin: 0.25rem 0;"></div>
         
-        <input type="text" id="new-act-title" placeholder="Task Title (e.g. Act #1: Painting)" />
+        <input type="text" id="new-act-title" placeholder="Task Title" />
         <input type="date" id="new-act-date" title="Activity Date" />
         <input type="url" id="new-act-link" placeholder="Attachment/Drive Link (Optional)" />
         <select id="new-act-token">
@@ -241,20 +195,17 @@
       </div>
     </div>
 
-    <!-- HOME VIEW -->
     <div id="home-view">
       <h3 style="margin-bottom: 1rem; color: var(--muted);">Select Your Grade Level / Section</h3>
       <div class="grid-container" id="sections-grid"></div>
     </div>
 
-    <!-- SECTION VIEW -->
     <div id="section-view" style="display: none;">
       <div class="table-wrapper">
         <table>
           <thead>
             <tr id="table-header">
               <th style="width:240px; text-align:left;">Student</th>
-              <!-- Dynamic Activity Columns -->
             </tr>
           </thead>
           <tbody id="table-body"></tbody>
@@ -263,34 +214,49 @@
     </div>
   </div>
 
-  <script>
-    const STORAGE_KEY = 'tracker_sections_v6';
-    const TEACHER_PASS = "121488";
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAABIEep2GsKERmOWUktIzT1_AEnv2MEZo",
+      authDomain: "math-tracker-d070f.firebaseapp.com",
+      projectId: "math-tracker-d070f",
+      storageBucket: "math-tracker-d070f.firebasestorage.app",
+      messagingSenderId: "1040140743983",
+      appId: "1:1040140743983:web:e4e1ca6b1e6f6c6d269dda"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const docRef = db.collection('dashboard').doc('state');
+
+    const TEACHER_PASS = "121488";
     let isTeacher = false;
     let currentSection = null;
     let activeEditingStudentId = null;
     let activeEditingSectionId = null;
 
-    let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+    let state = {
       banner: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=1200&auto=format&fit=crop&q=60",
-      sections: [
-        { id: "sec_1", name: "Grade 10 - Newton", cover: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&auto=format&fit=crop&q=60" },
-        { id: "sec_2", name: "Grade 10 - Einstein", cover: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=60" }
-      ],
-      students: [
-        { id: 1, name: "Sophia Lee", sectionId: "sec_1", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia" },
-        { id: 2, name: "Marcus Chen", sectionId: "sec_1", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus" }
-      ],
-      activities: [
-        { id: 'act_1', title: "Underpainting Study", date: "2026-04-10", token: "🎨", link: "https://google.com", sectionId: "sec_1" },
-        { id: 'act_2', title: "Color Mixing Formula", date: "2026-04-15", token: "⭐", link: "", sectionId: "sec_1" }
-      ],
-      completions: { "1_act_1": true, "1_act_2": true }
+      sections: [],
+      students: [],
+      activities: [],
+      completions: {}
     };
 
+    docRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        state = doc.data();
+        render();
+      } else {
+        saveState();
+      }
+    });
+
     function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      docRef.set(state);
     }
 
     function toggleMode() {
@@ -329,8 +295,8 @@
       const grid = document.getElementById('sections-grid');
       grid.innerHTML = '';
 
-      state.sections.forEach(sec => {
-        const studentCount = state.students.filter(s => s.sectionId === sec.id).length;
+      (state.sections || []).forEach(sec => {
+        const studentCount = (state.students || []).filter(s => s.sectionId === sec.id).length;
         const defaultCover = "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=60";
         
         const card = document.createElement('div');
@@ -356,12 +322,12 @@
     }
 
     function openSection(secId) {
-      currentSection = state.sections.find(s => s.id === secId);
+      currentSection = (state.sections || []).find(s => s.id === secId);
       document.getElementById('home-view').style.display = 'none';
       document.getElementById('section-view').style.display = 'block';
       document.getElementById('breadcrumb').style.display = 'flex';
       document.getElementById('form-section-controls').style.display = 'grid';
-      document.getElementById('active-section-title').innerText = currentSection.name;
+      document.getElementById('active-section-title').innerText = currentSection ? currentSection.name : '';
       renderSectionTable();
     }
 
@@ -380,8 +346,8 @@
       const headerRow = document.getElementById('table-header');
       const tbody = document.getElementById('table-body');
 
-      const students = state.students.filter(s => s.sectionId === currentSection.id);
-      const activities = state.activities.filter(a => a.sectionId === currentSection.id);
+      const students = (state.students || []).filter(s => s.sectionId === currentSection.id);
+      const activities = (state.activities || []).filter(a => a.sectionId === currentSection.id);
 
       headerRow.innerHTML = `<th style="width:240px; text-align:left;">Student</th>`;
       activities.forEach((act, idx) => {
@@ -389,8 +355,8 @@
 
         const teacherControls = isTeacher 
           ? `<div style="margin-top:4px;">
-              <button class="icon-btn-sm" onclick="editActivity('${act.id}')" title="Edit Activity">✏️ Edit</button>
-              <button class="icon-btn-sm" style="color:var(--danger);" onclick="deleteActivity('${act.id}')" title="Delete">🗑️</button>
+              <button class="icon-btn-sm" onclick="editActivity('${act.id}')">✏️ Edit</button>
+              <button class="icon-btn-sm" style="color:var(--danger);" onclick="deleteActivity('${act.id}')">🗑️</button>
              </div>` 
           : '';
 
@@ -399,7 +365,7 @@
 
         headerRow.innerHTML += `
           <th>
-            <a ${linkAttr} class="act-header-wrapper ${hasLink ? 'has-link' : ''}" title="${hasLink ? 'Click to open activity attachment/link' : ''}">
+            <a ${linkAttr} class="act-header-wrapper ${hasLink ? 'has-link' : ''}">
               <div style="font-weight:bold;">Act #${idx + 1} ${hasLink ? '🔗' : ''}</div>
               <div class="act-title-text">${escapeHtml(act.title)}</div>
               ${dateBadge}
@@ -414,15 +380,15 @@
         const tr = document.createElement('tr');
         
         const deleteStudentBtn = isTeacher 
-          ? `<button class="icon-btn-sm" style="color:var(--danger);" onclick="deleteStudent(${student.id})" title="Delete Student">🗑️</button>` 
+          ? `<button class="icon-btn-sm" style="color:var(--danger);" onclick="deleteStudent(${student.id})">🗑️</button>` 
           : '';
 
         let studentCell = `
           <td>
             <div class="student-info">
-              <img src="${student.avatar}" class="avatar" onclick="triggerAvatarChange(${student.id})" title="${isTeacher ? 'Click to change avatar' : ''}" />
+              <img src="${student.avatar}" class="avatar" onclick="triggerAvatarChange(${student.id})" />
               <div style="flex:1;">
-                <strong class="student-name" onclick="editStudentName(${student.id})" title="${isTeacher ? 'Click to edit name' : ''}">${escapeHtml(student.name)}</strong>
+                <strong class="student-name" onclick="editStudentName(${student.id})">${escapeHtml(student.name)}</strong>
               </div>
               ${deleteStudentBtn}
             </div>
@@ -431,7 +397,7 @@
 
         let taskCells = activities.map(act => {
           const key = `${student.id}_${act.id}`;
-          const isDone = !!state.completions[key];
+          const isDone = !!(state.completions || {})[key];
 
           return `
             <td>
@@ -451,8 +417,6 @@
       });
     }
 
-    /* EDITING & MODIFICATION FUNCTIONS */
-
     function editStudentName(studentId) {
       if (!isTeacher) return;
       const student = state.students.find(s => s.id === studentId);
@@ -461,7 +425,6 @@
         if (newName && newName.trim() !== "") {
           student.name = newName.trim();
           saveState();
-          renderSectionTable();
         }
       }
     }
@@ -474,13 +437,13 @@
       const newTitle = prompt("Edit Activity Title:", act.title);
       if (newTitle === null) return;
 
-      const newDate = prompt("Edit Date (YYYY-MM-DD) or leave blank:", act.date || "");
+      const newDate = prompt("Edit Date (YYYY-MM-DD):", act.date || "");
       if (newDate === null) return;
 
-      const newLink = prompt("Edit Attachment/Drive URL (leave blank if none):", act.link || "");
+      const newLink = prompt("Edit URL Link:", act.link || "");
       if (newLink === null) return;
 
-      const newToken = prompt("Edit Token Icon (e.g. ⭐, 🏆, 🎨, 🏅, 🚀):", act.token || "⭐");
+      const newToken = prompt("Edit Token Icon:", act.token || "⭐");
 
       act.title = newTitle.trim() || act.title;
       act.date = newDate.trim();
@@ -488,7 +451,6 @@
       act.token = newToken.trim() || act.token;
 
       saveState();
-      renderSectionTable();
     }
 
     function renameSection(event, secId) {
@@ -499,19 +461,16 @@
         if (newName && newName.trim() !== "") {
           sec.name = newName.trim();
           saveState();
-          renderHome();
         }
       }
     }
 
-    /* STANDARD TOGGLE, FILE, AND DELETION HANDLERS */
-
     function toggleToken(studentId, actId) {
       if (!isTeacher) return;
+      if (!state.completions) state.completions = {};
       const key = `${studentId}_${actId}`;
       state.completions[key] = !state.completions[key];
       saveState();
-      renderSectionTable();
     }
 
     function fileToBase64(file) {
@@ -528,7 +487,6 @@
       if (file) {
         state.banner = await fileToBase64(file);
         saveState();
-        renderHome();
       }
       event.target.value = '';
     }
@@ -543,37 +501,34 @@
         cover = await fileToBase64(fileInput.files[0]);
       }
 
+      if (!state.sections) state.sections = [];
       state.sections.push({ id: 'sec_' + Date.now(), name, cover });
       document.getElementById('new-section-name').value = '';
       fileInput.value = '';
       document.getElementById('section-cover-label').innerText = "📷 Upload Cover";
       saveState();
-      renderHome();
     }
 
     function deleteSection(event, secId) {
       event.stopPropagation();
-      if (confirm("Delete this section and all its students?")) {
+      if (confirm("Delete section and students?")) {
         state.sections = state.sections.filter(s => s.id !== secId);
         state.students = state.students.filter(s => s.sectionId !== secId);
         saveState();
-        renderHome();
       }
     }
 
     function deleteStudent(studentId) {
-      if (confirm("Remove this student?")) {
+      if (confirm("Remove student?")) {
         state.students = state.students.filter(s => s.id !== studentId);
         saveState();
-        renderSectionTable();
       }
     }
 
     function deleteActivity(actId) {
-      if (confirm("Delete this activity?")) {
+      if (confirm("Delete activity?")) {
         state.activities = state.activities.filter(a => a.id !== actId);
         saveState();
-        renderSectionTable();
       }
     }
 
@@ -591,7 +546,6 @@
         if (sec) {
           sec.cover = base64;
           saveState();
-          renderHome();
         }
       }
       event.target.value = '';
@@ -611,7 +565,6 @@
         if (student) {
           student.avatar = base64;
           saveState();
-          renderSectionTable();
         }
       }
       event.target.value = '';
@@ -627,6 +580,7 @@
         avatar = await fileToBase64(fileInput.files[0]);
       }
 
+      if (!state.students) state.students = [];
       state.students.push({
         id: Date.now(),
         name,
@@ -638,7 +592,6 @@
       fileInput.value = '';
       document.getElementById('student-avatar-label').innerText = "👤 Upload Photo";
       saveState();
-      renderSectionTable();
     }
 
     function assignActivity() {
@@ -649,6 +602,7 @@
 
       if (!title || !currentSection) return alert("Enter task title");
 
+      if (!state.activities) state.activities = [];
       state.activities.push({
         id: 'act_' + Date.now(),
         title, date, link, token,
@@ -659,7 +613,6 @@
       document.getElementById('new-act-date').value = '';
       document.getElementById('new-act-link').value = '';
       saveState();
-      renderSectionTable();
     }
 
     function escapeHtml(text) {
@@ -673,8 +626,6 @@
         renderHome();
       }
     }
-
-    renderHome();
   </script>
 </body>
-</html>face
+</html>
