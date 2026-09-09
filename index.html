@@ -102,6 +102,29 @@
       position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
     }
 
+    /* TERM TABS STYLING */
+    .term-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .term-tab {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .term-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
     .table-wrapper { 
       overflow-x: auto; 
       background: var(--card); 
@@ -161,7 +184,6 @@
     }
     .act-header-wrapper.has-link .act-title-text { color: var(--primary); }
 
-    /* TOKEN BUTTON OVERRIDES FOR STUDENT & TEACHER VIEWS */
     .token-btn {
       background: none;
       border: none;
@@ -197,12 +219,10 @@
 </head>
 <body>
 
-  <!-- Hidden File Pickers -->
   <input type="file" id="global-banner-picker" accept="image/*" style="display:none;" onchange="handleBannerFileSelect(event)" />
   <input type="file" id="global-cover-picker" accept="image/*" style="display:none;" onchange="handleCoverFileSelect(event)" />
   <input type="file" id="global-avatar-picker" accept="image/*" style="display:none;" onchange="handleAvatarFileSelect(event)" />
 
-  <!-- Header Banner -->
   <div class="header-banner" id="main-banner" style="background-image: url('https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=1200&auto=format&fit=crop&q=60');">
     <button class="banner-edit-btn" onclick="document.getElementById('global-banner-picker').click()">📷 Change Header Banner</button>
     <div class="banner-overlay">
@@ -267,6 +287,13 @@
     </div>
 
     <div id="section-view" style="display: none;">
+      <!-- Term Switching Bar -->
+      <div class="term-tabs">
+        <button class="term-tab active" id="term-1-btn" onclick="switchTerm(1)">Term 1</button>
+        <button class="term-tab" id="term-2-btn" onclick="switchTerm(2)">Term 2</button>
+        <button class="term-tab" id="term-3-btn" onclick="switchTerm(3)">Term 3</button>
+      </div>
+
       <div class="table-wrapper">
         <table>
           <thead>
@@ -280,7 +307,6 @@
     </div>
   </div>
 
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
@@ -301,6 +327,7 @@
     const TEACHER_PASS = "121488";
     let isTeacher = false;
     let currentSection = null;
+    let currentTerm = 1;
     let activeEditingStudentId = null;
     let activeEditingSectionId = null;
 
@@ -345,6 +372,19 @@
         document.getElementById('toggle-mode-btn').innerText = "🔑 Teacher Login";
       }
       render();
+    }
+
+    function switchTerm(termNumber) {
+      currentTerm = termNumber;
+      [1, 2, 3].forEach(t => {
+        const btn = document.getElementById(`term-${t}-btn`);
+        if (t === termNumber) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderSectionTable();
     }
 
     function updateLabel(input, labelId) {
@@ -394,7 +434,7 @@
       document.getElementById('breadcrumb').style.display = 'flex';
       document.getElementById('form-section-controls').style.display = 'grid';
       document.getElementById('active-section-title').innerText = currentSection ? currentSection.name : '';
-      renderSectionTable();
+      switchTerm(1); // Default to Term 1 upon entering
     }
 
     function showHome() {
@@ -413,7 +453,11 @@
       const tbody = document.getElementById('table-body');
 
       const students = (state.students || []).filter(s => s.sectionId === currentSection.id);
-      const activities = (state.activities || []).filter(a => a.sectionId === currentSection.id);
+      
+      // Filter activities for current section AND current term
+      const activities = (state.activities || []).filter(a => 
+        a.sectionId === currentSection.id && (a.term === currentTerm || (!a.term && currentTerm === 1))
+      );
 
       headerRow.innerHTML = `<th>Student</th>`;
       activities.forEach((act, idx) => {
@@ -672,7 +716,8 @@
       state.activities.push({
         id: 'act_' + Date.now(),
         title, date, link, token,
-        sectionId: currentSection.id
+        sectionId: currentSection.id,
+        term: currentTerm // Automatically binds activity to the active term
       });
 
       document.getElementById('new-act-title').value = '';
