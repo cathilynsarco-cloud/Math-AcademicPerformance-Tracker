@@ -119,10 +119,9 @@
     .act-title-text { font-size: 0.75rem; color: var(--text); font-weight: bold; text-transform: none; margin-top: 2px; }
     .act-header-wrapper.has-link .act-title-text { color: var(--primary); }
 
-    .token-btn { background: none; border: none; font-size: 1.6rem; cursor: pointer; transition: transform 0.15s; }
+    .token-btn { background: none; border: none; font-size: 1.6rem; cursor: pointer; transition: transform 0.15s, opacity 0.2s, filter 0.2s; }
     .token-btn:hover { transform: scale(1.2); }
-    body.teacher-mode .token-btn.empty { opacity: 0.25; filter: grayscale(100%); }
-    body:not(.teacher-mode) .token-btn { opacity: 1 !important; filter: none !important; }
+    .token-btn.empty { opacity: 0.2; filter: grayscale(100%); }
 
     .icon-btn-sm { background: none; border: none; cursor: pointer; font-size: 0.8rem; opacity: 0.7; margin: 0 2px; }
     .icon-btn-sm:hover { opacity: 1; }
