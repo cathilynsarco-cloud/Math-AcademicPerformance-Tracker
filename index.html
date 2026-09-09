@@ -102,10 +102,29 @@
       position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
     }
 
-    .table-wrapper { overflow-x: auto; background: var(--card); border-radius: 12px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; min-width: 800px; }
+    .table-wrapper { 
+      overflow-x: auto; 
+      background: var(--card); 
+      border-radius: 12px; 
+      border: 1px solid var(--border); 
+    }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 800px; }
     th, td { padding: 0.75rem; border-bottom: 1px solid var(--border); text-align: center; vertical-align: middle; }
     th { background: #f1f5f9; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; }
+
+    /* FREEZE FIRST COLUMN (STUDENTS) */
+    th:first-child, td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background: var(--card);
+      border-right: 2px solid var(--border);
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    }
+    th:first-child {
+      background: #f1f5f9;
+      z-index: 3;
+    }
 
     .student-info { display: flex; align-items: center; gap: 0.5rem; text-align: left; }
     .student-name { cursor: default; }
@@ -119,20 +138,34 @@
     .act-title-text { font-size: 0.75rem; color: var(--text); font-weight: bold; text-transform: none; margin-top: 2px; }
     .act-header-wrapper.has-link .act-title-text { color: var(--primary); }
 
-.token-btn { 
-  background: none; 
-  border: none; 
-  font-size: 1.6rem; 
-  cursor: pointer; 
-  transition: transform 0.15s, opacity 0.2s, filter 0.2s; 
-  opacity: 1 !important; 
-  filter: none !important; 
-}
-.token-btn:hover { transform: scale(1.2); }
-.token-btn.empty { 
-  opacity: 0.2 !important; 
-  filter: grayscale(100%) !important; 
-}
+    /* TOKEN BUTTON OVERRIDES FOR STUDENT & TEACHER VIEWS */
+    .token-btn {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s, filter 0.2s;
+      opacity: 1 !important;
+      filter: none !important;
+      color: initial !important;
+      -webkit-text-fill-color: initial !important;
+    }
+    .token-btn:hover { transform: scale(1.2); }
+    .token-btn.empty {
+      opacity: 0.18 !important;
+      filter: grayscale(100%) !important;
+    }
+    .token-btn:disabled {
+      cursor: default;
+      opacity: 1 !important;
+      filter: none !important;
+      color: initial !important;
+      -webkit-text-fill-color: initial !important;
+    }
+    .token-btn.empty:disabled {
+      opacity: 0.18 !important;
+      filter: grayscale(100%) !important;
+    }
 
     .icon-btn-sm { background: none; border: none; cursor: pointer; font-size: 0.8rem; opacity: 0.7; margin: 0 2px; }
     .icon-btn-sm:hover { opacity: 1; }
@@ -414,7 +447,7 @@
               <button 
                 class="token-btn ${isDone ? '' : 'empty'}" 
                 onclick="toggleToken(${student.id}, '${act.id}')"
-                ${!isTeacher ? 'disabled style="cursor:default;"' : ''}
+                ${!isTeacher ? 'disabled' : ''}
               >
                 ${act.token}
               </button>
