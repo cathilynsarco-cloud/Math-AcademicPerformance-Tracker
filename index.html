@@ -135,6 +135,18 @@
     th, td { padding: 0.5rem 0.4rem; border-bottom: 1px solid var(--border); text-align: center; vertical-align: middle; }
     th { background: #f1f5f9; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; }
 
+    /* FREEZE TOP HEADER ROW */
+    th { 
+      background: #f1f5f9; 
+      font-size: 0.75rem; 
+      color: var(--muted); 
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
     /* FREEZE & COMPACT FIRST COLUMN (STUDENTS) */
     th:first-child, td:first-child {
       position: sticky;
@@ -147,9 +159,11 @@
       min-width: 140px !important;
       max-width: 140px !important;
     }
+
+    /* TOP-LEFT CORNER CELL OVERLAP FIX */
     th:first-child {
       background: #f1f5f9;
-      z-index: 3;
+      z-index: 11;
     }
 
     /* COMPACT ACTIVITY COLUMNS FOR MOBILE FITTING */
